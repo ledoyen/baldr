@@ -19,17 +19,7 @@
         <dependency>
             <groupId>com.github.yannrichet</groupId>
             <artifactId>JMathPlot</artifactId>
-            <version>1.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.github.yannrichet</groupId>
-                    <artifactId>jmathio</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.github.yannrichet</groupId>
-                    <artifactId>jmatharray</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -39,6 +29,10 @@
     </dependencies>
 
     <repositories>
+        <repository>
+            <id>central</id>
+            <url>http://central.maven.org/maven2/</url>
+        </repository>
         <repository>
             <id>netbeans</id>
             <url>http://bits.netbeans.org/maven2/</url>
