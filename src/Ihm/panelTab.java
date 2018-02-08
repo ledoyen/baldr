@@ -11,17 +11,13 @@ import Ihm.renderers.*;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.ResourceBundle;
+import java.util.*;
 import javax.swing.tree.*;
 import Main.*;
 import Noyau.*;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import javax.swing.table.*;
 import org.math.plot.plotObjects.Plotable;
@@ -1174,12 +1170,12 @@ int i;
         Color red = new Color(200,0,0);
         Color blue = new Color(0,0,200);
 
-        Plot[] plots = plot3DPanel1.getPlots();
+        List<Plot> plots = plot3DPanel1.getPlots();
 
-        for(int i=0;i<plots.length;i++){
-            plots[i].setColor(blue);
-            if(plots[i].getName().compareTo(name) == 0){
-                plots[i].setColor(red);
+        for(Plot plot : plots){
+            plot.setColor(blue);
+            if(plot.getName().compareTo(name) == 0){
+                plot.setColor(red);
             }
         }
         plot3DPanel1.updateUI();
@@ -1213,9 +1209,9 @@ int i;
     }
 
     private void hidePlotlabels(){
-        Plotable[] labels = plot3DPanel1.getPlotables();
-        for(int i=0;i<labels.length;i++){
-            plot3DPanel1.removePlotable(labels[i]);
+        List<Plotable> labels = plot3DPanel1.getPlotables();
+        for(Plotable label : labels){
+            plot3DPanel1.removePlotable(label);
         }
         slabels = false;
         //jButton12.setText("Afficher les etiquettes");
@@ -1247,7 +1243,7 @@ int i;
 
         // On affiche les vecteurs et les labels
         for(int i=0;i<vectorsd.length;i++){
-            plot3DPanel1.addScatterPlot(fichs[i].getName(),blue,vectorsd[i]);
+            plot3DPanel1.addScatterPlot(fichs[i].getName(),blue,new double[][]{vectorsd[i]});
         }
         showPlotlabels();
 
