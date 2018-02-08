@@ -19,11 +19,17 @@ import java.util.ResourceBundle;
  * @author zeta
  */
 public interface ResDispatcher {
-    /** Callback for dispalying the results */
-    public void DispatchResult();
-    /** Callback for displaying the 3D graph 
+    /**
+     * Callback for dispalying the results
+     */
+    void DispatchResult();
+
+    /**
+     * Callback for displaying the 3D graph
+     *
      * @param vectors 3D vectors to plot
      */
-    public void Dispatch3DResult(float[][] vectors);
-    public ResourceBundle getMsgs();
+    void Dispatch3DResult(float[][] vectors);
+
+    ResourceBundle getMsgs();
 }

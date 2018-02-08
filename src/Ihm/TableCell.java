@@ -8,14 +8,19 @@
 package Ihm;
 
 /**
- *
  * @author zeta
  */
-public class  TableCell {
-    
-    /** Creates a new instance of TableCell */
-   public float v;
-   public boolean done; 
-   public TableCell(float _v,boolean _d){v=_v;done=_d;}
-   
+public class TableCell {
+
+    /**
+     * Creates a new instance of TableCell
+     */
+    public float v;
+    public boolean done;
+
+    public TableCell(float _v, boolean _d) {
+        v = _v;
+        done = _d;
+    }
+
 }

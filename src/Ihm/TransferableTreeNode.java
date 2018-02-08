@@ -8,33 +8,32 @@
  */
 
 package Ihm;
+
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 public class TransferableTreeNode extends DefaultMutableTreeNode implements Transferable {
-   private final static int TREE = 0;
-    
- /* final static int STRING = 1;
-  
-  final static int PLAIN_TEXT = 1;*/
-    
     final public static DataFlavor DEFAULT_MUTABLE_TREENODE_FLAVOR = new DataFlavor(
-            DefaultMutableTreeNode.class, "Default Mutable Tree Node");
-    
-    static DataFlavor flavors[] = { DEFAULT_MUTABLE_TREENODE_FLAVOR,DataFlavor.javaFileListFlavor};
-    
+        DefaultMutableTreeNode.class, "Default Mutable Tree Node");
+
+    /* final static int STRING = 1;
+
+     final static int PLAIN_TEXT = 1;*/
+    private final static int TREE = 0;
+    static DataFlavor flavors[] = {DEFAULT_MUTABLE_TREENODE_FLAVOR, DataFlavor.javaFileListFlavor};
+
     private DefaultMutableTreeNode data;
-    
+
     public TransferableTreeNode(DefaultMutableTreeNode data) {
         this.data = data;
     }
-    
+
     public DataFlavor[] getTransferDataFlavors() {
         return flavors;
     }
-    
+
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
         Object returnObject;
         if (flavor.equals(flavors[TREE])) {
@@ -49,15 +48,15 @@ public class TransferableTreeNode extends DefaultMutableTreeNode implements Tran
         }
         return returnObject;
     }
-    
+
     public boolean isDataFlavorSupported(DataFlavor flavor) {
-    boolean returnValue = false;
-    for (int i = 0, n = flavors.length; i < n; i++) {
-      if (flavor.equals(flavors[i])) {
-        returnValue = true;
-        break;
-      }
-    }
+        boolean returnValue = false;
+        for (int i = 0, n = flavors.length; i < n; i++) {
+            if (flavor.equals(flavors[i])) {
+                returnValue = true;
+                break;
+            }
+        }
         return false;
     }
 }
