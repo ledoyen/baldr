@@ -38,7 +38,7 @@ public abstract class Task extends Thread implements Savable{
     protected float meanDist;
     private Map<File,Long> pCalc;
     private boolean stopNow;
-    
+
     /** Creates a new instance of Task */
     public Task() {
         setPriority(Thread.MIN_PRIORITY);
@@ -51,23 +51,23 @@ public abstract class Task extends Thread implements Savable{
         stopNow=false;
         pCalc=new HashMap<java.io.File,java.lang.Long>();
     }
-    
+
     protected abstract void cleanUp();
-    
+
     public void stopAnalysis(){
         stopMeNow();
         cleanUp();
     }
-    
+
     private void stopMeNow(){
         stopNow=true;
         while(this.isAlive()){};
     }
-    
+
     public void setFiles(File[] fichs) {
         int i,j;
         files=fichs;
-        
+
         size = fichs.length;
         res= new float[fichs.length][];
         for(i=0;i<fichs.length;i++) {
@@ -81,25 +81,25 @@ public abstract class Task extends Thread implements Savable{
                 }
             }
         }
-        
-        
+
+
     }
-    
+
     private static OutputStream makeComp(OutputStream gzos, File file) throws IOException{
         byte[] buf = new byte[1024];
         int len;
-        
+
         FileInputStream fin = new FileInputStream(file);
         BufferedInputStream in = new BufferedInputStream(fin);
-        
+
         while ((len = in.read(buf)) >= 0) {
             gzos.write(buf,0,len);
         }
         in.close();
-        
+
         return gzos;
     }
-    
+
     private long getGZipSize(File file)
     throws IOException, FileNotFoundException {
         long ret = 0;
@@ -109,14 +109,14 @@ public abstract class Task extends Thread implements Savable{
         }
         OutputStreamSizer fos=new OutputStreamSizer();
         BufferedOutputStream bfos=new BufferedOutputStream(fos);
-    
+
      //   ByteArrayOutputStream fos = new ByteArrayOutputStream();
         GZIPOutputStream gzos = new GZIPOutputStream(fos);
-        
+
         makeComp(gzos,file);
-        
+
         gzos.close(); // Complete l'archive et la clot
-    
+
         ret = fos.getSize();
          // ret = fos.size();
         fos.close();
@@ -125,48 +125,48 @@ public abstract class Task extends Thread implements Savable{
 
         return ret;
     }
-    
+
     private static long getGZipSize(File file, File file2)
     throws IOException, FileNotFoundException {
         long ret = 0;
-        
+
         //ByteArrayOutputStream fos = new ByteArrayOutputStream();
         OutputStreamSizer fos=new OutputStreamSizer();
         BufferedOutputStream bfos=new BufferedOutputStream(fos);
         GZIPOutputStream gzos = new GZIPOutputStream(bfos);
-        
+
         makeComp(gzos,file);
         makeComp(gzos,file2);
-        
+
         gzos.close(); // Complete l'archive et la clot
-        
+
         ret = fos.getSize();
         //System.out.println(ret+"<---taille");
         fos.close();
         return ret;
     }
-    
+
     public void run() {
         int i,j,k, nbr = files.length;
         long ci, cj, cij;
-        
+
         meanDist = k = 0;
         ci = cj = cij = 0L;
-        
+
         //System.out.println("# " + files.length + " files");
-        
+
         for(i=0;i<nbr;i++){
-            
+
           //  System.out.println("# filename : " + files[i].getName());
             try  {
                 ci =  getGZipSize(files[i]);
-                
+
          //       System.out.println("# file size: " + files[i].length());
           //      System.out.println("# compressed file size: " + ci);
             } catch (Exception e) {
                 System.err.println(e);
             }
-            
+
             for(j=0;j<i;j++){
                 // Annulation ?
                 if(stopNow)
@@ -187,31 +187,31 @@ public abstract class Task extends Thread implements Savable{
                     System.out.println("cached");
                 }
                 setState(i,j);
-                
+
             //    System.out.println(" # pair " + files[i].getName()+"<->" + files[j].getName() + " = " + getRes(i,j));
                 meanDist += getRes(i,j);
                 k++;
             }
         }
-        
+
         meanDist /= (float)k;
       //  System.out.println("# meanDist = "+meanDist);
-        
-        stateMessage="Analyse Terminée";
+
+        stateMessage="Analyse Terminee";
         this.state=1;
         finalState();
         //System.out.println("Finished");
     }
-    
+
     private void setRes(int i,int j,float val) {
         if(res[i].length>j) {
             res[i][j]=val;
         }else{
             res[j][i]=val;
         }
-        
+
     }
-    
+
     private void setRes(File f1,File f2,float val) {
         int r1,r2,i;
         r1=-1;r2=-1;
@@ -224,19 +224,19 @@ public abstract class Task extends Thread implements Savable{
         }
         setRes(r1,r2,val);
     }
-    
+
     public void setExRes(File[] exfiles,float[][] exres) {
         File[] fichs;
         int i,j;
         fichs=files;
-        
+
         Map<File,Integer> aInd=new HashMap<java.io.File,java.lang.Integer>();
-        
+
         for(i=0;i<exfiles.length;i++) {
             aInd.put(exfiles[i],new Integer(i));
         }
-        
-        
+
+
         for(i=0;i<fichs.length;i++) {
             {
                 if(aInd.containsKey(fichs[i])) //old file
@@ -252,26 +252,26 @@ public abstract class Task extends Thread implements Savable{
                                 t=ii;
                                 ii=jj;
                                 jj=t;
-                                
+
                             }
-                            
+
                             setRes(i,j,exres[ii][jj]);
                         }
                     }
-                    
+
                 }
             }
         }
-        
-        
-        
+
+
+
     }
-    
-    
+
+
     public float[][] getResults() {
         return res;
     }
-    
+
     public float getRes(File f1,File f2) {
         int r1,r2,i;
         r1=-1;r2=-1;
@@ -285,7 +285,7 @@ public abstract class Task extends Thread implements Savable{
         }
         return getRes(r1,r2);
     }
-    
+
     public float getRes(int i,int j) {
         //System.out.println(i+" "+j +"("+res[i].length+":"+res[j].length+")");
         if(res[i].length>j) {
@@ -293,40 +293,40 @@ public abstract class Task extends Thread implements Savable{
         }else{
             return res[j][i];
         }
-        
+
     }
-    
+
     private void setState(int i,int j) {
         this.state+=1.0/this.numAnalyse;
         stateMessage="Analyse de "+files[i].getName()+" vs "+files[j].getName();
         printState();
     }
-    
+
     protected abstract void printState();
     protected abstract void finalState();
-    
+
     public float getStateCount() {
         return state;
     }
-    
+
     public String getStateMessage() {
         return stateMessage;
     }
-    
+
     public int getNumAnalyse() {
         return numAnalyse;
     }
-    
-    
+
+
     public File[] getFiles() {
-        
+
         return files;
     }
-    
+
     public StringBuffer toXml() {
         StringBuffer str=new StringBuffer();
         str.append("<analys>\n");
-        
+
         str.append("<fichs>\n");
         for(File f:files) {
             str.append("<file>").append(SaveAndRestore.escape(f.getAbsolutePath())).append("</file>\n");
@@ -343,24 +343,24 @@ public abstract class Task extends Thread implements Savable{
                 j++;
             }
               str.append("</li>\n");
-          
+
             i++;
         }
         str.append("</res>\n");
         str.append("</analys>\n");
-        
-        
+
+
         return str;
-        
+
     }
-    
+
     public void fromDom(Node node)
     {
         int k;
         int i,j;
            File [] filelist=null;
-           float[][] resmat=null;  
-      
+           float[][] resmat=null;
+
             if(node.getNodeName()=="analys")
             {
                NodeList ana=node.getChildNodes();
@@ -381,19 +381,19 @@ public abstract class Task extends Thread implements Savable{
                    }
                   filelist=new File[1];
                   filelist= (File[]) list.toArray(filelist);
-                       
+
                    }else if(ana.item(j).getNodeName()=="res")
                    {
                    resmat=getMat(Integer.parseInt(ana.item(j).getAttributes().getNamedItem("len").getTextContent()),ana.item(j).getChildNodes()) ;
                    }
                }
-                
-                
+
+
                 setExRes(filelist,resmat);
-            
+
             }
-        
-        
+
+
     }
 
     private float[][] getMat(int i, NodeList l) {
@@ -411,19 +411,19 @@ public abstract class Task extends Thread implements Savable{
             mat[a]=new float[Integer.parseInt(l.item(i).getAttributes().getNamedItem("len").getTextContent())];
         for(j=0;j<m.getLength();j++)
         {
-                
+
         if(m.item(j).getNodeName()=="l")
         {
             mat[a][b]=Float.parseFloat(m.item(j).getTextContent());
-            
+
         b++;
         }
-        }    
-        
+        }
+
         a++;
         }
         }
         return mat;
     }
-    
+
 }

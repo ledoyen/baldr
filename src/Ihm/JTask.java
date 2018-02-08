@@ -14,23 +14,23 @@ import javax.swing.JProgressBar;
  * @author zeta
  */
 public class JTask extends Task {
-    
+
     private JProgressBar bar;
     private JLabel statusbar;
     private ResDispatcher recall;
     private conv3d g3d;
-    
+
     /** Creates a new instance of Jtask */
     public JTask() {
         super();
     }
-    
+
     public JTask(JProgressBar bar)
     {
     super();
     setBar(bar);
     }
-    
+
     public JTask(JProgressBar bar, JLabel statusbar)
     {
     super();
@@ -44,14 +44,14 @@ public class JTask extends Task {
     this.statusbar = statusbar;
     this.setRecall(recall);
     }
-    
+
     protected void printState() {
         float a=this.getStateCount();
         int m;
         m=bar.getMaximum();
         try {
             bar.setValue(Math.round(a*m));
-            //   bar.updateUI(); //exception leve quand je fait ça
+            //   bar.updateUI(); //exception leve quand je fait ca
         }catch(Exception e)
         {
         System.out.println("exp");
@@ -81,9 +81,9 @@ public class JTask extends Task {
                 g3d.stopNow();
         }
     }
-    
+
     public void setRecall(ResDispatcher recall) {
         this.recall = recall;
     }
-   
+
 }

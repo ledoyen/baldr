@@ -51,49 +51,49 @@ public class panelTab extends javax.swing.JPanel implements ResDispatcher,Savabl
     private double[][] vectorsd;
     /** Creates new form panelTab */
     private double[] valLin;
-    
+
     private ResourceBundle msgs;
     /** Construct and display a tab
      * @param monNum Tab's Id number
      */
     public panelTab(int monNum) {
         msgs=ResourceBundle.getBundle("i18n/Balder");
-        
-        
+
+
         fileList = new DefaultMutableTreeNode(msgs.getString("Documents"));
         initComponents();
         tabNumber=monNum;
         //jButton10.setVisible(false);
         jButton9.setEnabled(false);
-        
+
         jButton11.setVisible(false);
         jComboBox1.setSelectedIndex(0);
-        
-        
+
+
         jLabel3.setText(msgs.getString("Of")+Integer.toString(jComboBox1.getItemCount()));
         // TODO: Comprendre pourquoi les getWidth retournent 0 ici
         //jSplitPane2.setDividerLocation(this.getPreferredSize().width*2/3);
-        plot2DPanel1.plotToolBar.remove(3); // On dégage les entrées du menu de la toolbar qui servent à rien
+        plot2DPanel1.plotToolBar.remove(3); // On degage les entrees du menu de la toolbar qui servent a rien
         plot2DPanel1.plotToolBar.remove(4);
-        
-        plot3DPanel1.plotToolBar.remove(4); // On dégage les entrées du menu de la toolbar qui servent à rien
+
+        plot3DPanel1.plotToolBar.remove(4); // On degage les entrees du menu de la toolbar qui servent a rien
         plot3DPanel1.plotToolBar.remove(5);
-        
+
         plot2DPanel1.setVisible(true);
         plot3DPanel1.setVisible(false);
-        
+
         jSplitPane3.setDividerSize(0);
         unset3Dview();
-    
-        
-        	
+
+
+
 
 jTable1.addMouseListener(new ResTableMouseAdapter(jTable1));
 
-        
-        
+
+
     }
-    
+
     /**
      *Matisse stuff
      */
@@ -681,9 +681,9 @@ jTable1.addMouseListener(new ResTableMouseAdapter(jTable1));
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
 int i;
         BaldrTableModel tmod=((BaldrTableModel) jTable1.getModel())/*.toggleMethod()*/;
-    
+
         /*jTable1.setModel(new BaldrTableModel(tmod.getFiles(),tmod.getData(),tmod.isMoy()^true));*/
-    
+
     TableCellRenderer tr=jTable1.getCellRenderer(0,0);
         TableCellRenderer td=jTable1.getCellRenderer(0,1);
         TableColumn tc;
@@ -694,18 +694,18 @@ int i;
             tc.setCellRenderer(td);
             if(i==0){
                 //on se passe de aller chercher la font du table header...
-                // TODO : Ameliorer ça
+                // TODO : Ameliorer ca
                 tc.setMinWidth(((String)tmod.getValueAt(0,0)).length()*5);
                 tc.setCellRenderer(tr);
             }else{
                 tc.setCellRenderer(td);
             }
         }
-    
-    
+
+
         jTable1.repaint();
         jButton13.setText((!tmod.isMoy()?msgs.getString("Local"):msgs.getString("Global")));
-        
+
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
@@ -713,14 +713,14 @@ int i;
         if(!((JSlider) evt.getSource()).getValueIsAdjusting()){
         plot2DPanel1.removeAllPlots();
   System.out.println("val ch : "+jSlider1.getValue());
-  
+
       plot2DPanel1.addHistogramPlot(msgs.getString("Values_Histogram"),valLin,jSlider1.getValue());
  }
     }//GEN-LAST:event_jSlider1StateChanged
 
     private void jSlider1CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jSlider1CaretPositionChanged
 
-         
+
     }//GEN-LAST:event_jSlider1CaretPositionChanged
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -737,31 +737,31 @@ int i;
             jButton9.setEnabled(false);
         }
     }//GEN-LAST:event_jButton9ActionPerformed
-    
+
     private void SelectAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectAllActionPerformed
         jReport.selectAll();
     }//GEN-LAST:event_SelectAllActionPerformed
-    
+
     private void collerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collerActionPerformed
         jReport.paste();
     }//GEN-LAST:event_collerActionPerformed
-    
+
     private void copierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copierActionPerformed
         jReport.copy();
     }//GEN-LAST:event_copierActionPerformed
-    
+
     private void couperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_couperActionPerformed
         jReport.cut();
     }//GEN-LAST:event_couperActionPerformed
-    
+
     private void jReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jReportMouseClicked
         if (evt.getButton()==java.awt.event.MouseEvent.BUTTON2||evt.getButton()==java.awt.event.MouseEvent.BUTTON3) {
             jPopupMenu1.show(evt.getComponent(),evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_jReportMouseClicked
-    
+
     private void jTree1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTree1KeyPressed
-        //in the jTree, key Delete can remove selected files 
+        //in the jTree, key Delete can remove selected files
         //and the enter key will open the favorite text editor for the current selected file
         if(evt.getKeyCode()==java.awt.event.KeyEvent.VK_DELETE) {
             retirerFichiers();
@@ -770,32 +770,32 @@ int i;
             if(fcs != null && fcs.length > 0){
                 openEditor(fcs);
             }
-            
+
         }
     }//GEN-LAST:event_jTree1KeyPressed
     public boolean isFilelistEmpty()
     {
     return fileList.isLeaf();
     }
-    
+
     /**
      *Function wich return the node in the filetree that is selected
      *
      *@return a node, its parents if the node is a leaf and not a directory or the root of the tree
      *
      */
-    
+
     public DefaultMutableTreeNode getLastSelectedNode(){
         if(jTree1.isSelectionEmpty())
             return fileList;
         DefaultMutableTreeNode lro;
         TreePath ins=jTree1.getSelectionPath(); /*premier fichier selectionn?*/
-        
+
         lro=fileList; /*par def racine*/
-        
-        if(ins!=null)  /*permet de recuperer le noeud selectionné */
+
+        if(ins!=null)  /*permet de recuperer le noeud selectionne */
         {
-            
+
             Enumeration files = fileList.breadthFirstEnumeration(); /*Tout l'arbre en largeur*/
             DefaultMutableTreeNode fich;
             while (files.hasMoreElements()) {
@@ -806,12 +806,12 @@ int i;
                 }
             }
         }
-        
+
         if(lro.isLeaf() && !lro.isRoot() && !((File)lro.getUserObject()).isDirectory()) { /*Si le selectionne est une feuille et un fichier, on ajoute dans le dossier parent [sauf racine]*/
             lro=(DefaultMutableTreeNode)lro.getParent();
         }
         return lro;
-        
+
     }
     private void jComboBox1MouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_jComboBox1MouseWheelMoved
         if (evt.getWheelRotation() > 0) {
@@ -820,7 +820,7 @@ int i;
             itemPrecedent();
         }
     }//GEN-LAST:event_jComboBox1MouseWheelMoved
-    
+
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         if(slabels){
             hidePlotlabels();
@@ -828,11 +828,11 @@ int i;
             showPlotlabels();
         }
     }//GEN-LAST:event_jButton12ActionPerformed
-    
+
     private void lancerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lancerActionPerformed
         jButton3.doClick();
     }//GEN-LAST:event_lancerActionPerformed
-    
+
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String path = jComboBox1.getSelectedItem().toString();
         String name ="";
@@ -842,7 +842,7 @@ int i;
         plot3Dhlpt(name);
         //   jReport.setText("Fichier "+name);
     }//GEN-LAST:event_jComboBox1ActionPerformed
-    
+
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         if(curview == 0){
             set3Dview();
@@ -850,34 +850,34 @@ int i;
             unset3Dview();
         }
     }//GEN-LAST:event_jButton11ActionPerformed
-    
+
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         itemDebut();
     }//GEN-LAST:event_jButton6ActionPerformed
-    
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         itemFin();
     }//GEN-LAST:event_jButton4ActionPerformed
-    
+
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         itemPrecedent();
     }//GEN-LAST:event_jButton7ActionPerformed
-    
+
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         itemSuivant();
     }//GEN-LAST:event_jButton5ActionPerformed
-    
+
     private void supprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerActionPerformed
-        
+
         retirerFichiers();
     }//GEN-LAST:event_supprimerActionPerformed
-    
+
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
-        
+
         ajouterFichiers();
     }//GEN-LAST:event_ajouterActionPerformed
-    
-    
+
+
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
         if (evt.getButton()==java.awt.event.MouseEvent.BUTTON2||evt.getButton()==java.awt.event.MouseEvent.BUTTON3) {
             //if(jTree1.getSelectionCount()<2) {
@@ -891,17 +891,17 @@ int i;
                     jTree1.setSelectionPath(selPath);
                 }
             } else {
-                
+
                 jTree1.setSelectionPath(selPath);
             }
             menuContextuel.show(evt.getComponent(),evt.getX(), evt.getY());
-            
+
         }
-        
+
         if(evt.getClickCount()>1) {
-            
+
             File[] fs=getTreeSelectedFiles();
-            
+
             if(fs != null && fs.length > 0){
                 openEditor(fs);
             }
@@ -910,17 +910,17 @@ int i;
     /**
      *Set the view in use to 3D
      */
-    
+
     private void set3Dview(){
         //jButton11.setText("Vue 2D");
         jButton11.setIcon(new ImageIcon("Images/chart_bar.png"));
         jButton11.setToolTipText(msgs.getString("2DView"));
-        
+
         plot2DPanel1.setVisible(false);
         plot3DPanel1.setVisible(true);
         jButton12.setVisible(true);
         jPanel9.setVisible(false);
-  
+
         curview = 1;
     }
     /**
@@ -936,7 +936,7 @@ int i;
       ///  jPanel9.setVisible(true);
         curview = 0;
     }
-    
+
     private DefaultMutableTreeNode recursDir(File fich){
         //System.out.println(chooser.getSelectedFiles()[i]);
         DefaultMutableTreeNode el= new DefaultMutableTreeNode(fich);
@@ -945,16 +945,16 @@ int i;
             for(File ch : fich.listFiles()) {
                 if(ch.isDirectory()){/*Ajoute tous les fils*/
                     el.add(recursDir(ch));
-                    
+
                 }else{
                     el.add(new DefaultMutableTreeNode(ch));
                 }
             }
         }
-        
+
         return el;
     }
-    
+
     private File[] getFileTab() {
         Enumeration files = fileList.depthFirstEnumeration();
         int count=fileList.getLeafCount(); /* Les fichiers ? analyser sont forc?ment des feuilles
@@ -963,9 +963,9 @@ int i;
         int i=0;
         DefaultMutableTreeNode fich;
         if(!fileList.isLeaf()){
-        
+
             File[] fichiers = new File[count];
-            
+
             while (files.hasMoreElements()) {
                 fich=(DefaultMutableTreeNode)files.nextElement();
                 if(fich.isLeaf()&&!((File)fich.getUserObject()).isDirectory()) {
@@ -977,11 +977,11 @@ int i;
            for(int o=0;o<i;o++)
                fichiersSansRepVide[o]=fichiers[o];
             return fichiersSansRepVide;
-            
+
         }
         return null;
     }
-    
+
     /**
      * Function that display a file chooser to add files or directories to the analysis
      *
@@ -990,22 +990,22 @@ int i;
         DefaultMutableTreeNode lro;
         TreePath ins=jTree1.getSelectionPath();
         JFileChooser chooser = new JFileChooser(); /*boite de dialogue fichiers*/
-        
+
         chooser.setMultiSelectionEnabled(true); /* rend un tab de files */
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); /*Soit des files soit des dirs */
-        
+
         String lastdir = Noyau.opts.readPref("LAST_DIR");
         if(lastdir != null){
             chooser.setCurrentDirectory(new File(lastdir));
         }
-        
+
         int res = chooser.showOpenDialog(this);
-        
+
         switch(res) {
             case JFileChooser.APPROVE_OPTION:
                 //  for(int i=0;i < chooser.getSelectedFiles().length;i++){
                 lro=fileList; /*par def racine*/
-                
+
                 if(ins!=null){
                     Enumeration files = fileList.breadthFirstEnumeration(); /*Tout l'arbre en largeur*/
                     DefaultMutableTreeNode fich;
@@ -1023,7 +1023,7 @@ int i;
                 ajouterFichiers(chooser.getSelectedFiles(),lro);
                 /*Demande de redessinage du tree*/
                 // jTree1.setModel(new DefaultTreeModel(fileList));
-                
+
                 String curdir = chooser.getCurrentDirectory().toString();
                 if(lastdir == null || lastdir.compareTo(curdir) != 0){
                     Noyau.opts.writePref("LAST_DIR",curdir);
@@ -1034,51 +1034,51 @@ int i;
             case JFileChooser.ERROR_OPTION:
                 break;
         }
-        
+
     }
     /**
      *Function that perform the real work to insert a files in the jTree
      *@param listeDeFichiers Files to add
      *@param noeud node where the files will be added
      */
-    
+
     public void ajouterFichiers(File [] listeDeFichiers,DefaultMutableTreeNode noeud){
         /*noeud ou on va add*/
         /*premier fichier selectionn?*/
         DefaultMutableTreeNode lro=noeud;
         Main.modifie=true;
-        //une fois le noeud selectionné trouvé, on insère les fichiers
+        //une fois le noeud selectionne trouve, on insere les fichiers
         for(File fich : listeDeFichiers){
             lro.add(recursDir(fich)); /*Fonction d'ajout r?cursive de fichiers*/
         }
         jTree1.updateUI();
         //on vient d'ajouter des fichiers
     }
-    
+
     /**
      *Destroy the node and their children which are selected in the jTree
      */
-    
+
     private void retirerFichiers() {
         boolean flag;
         if(jTree1.isSelectionEmpty()){ /*Retire que les fichier* selectionnez*/
             return;
         }
-        
+
         TreePath[] removeList = jTree1.getSelectionPaths();
         // System.out.println("A detruire");
         Main.modifie=true;
         for(TreePath path: removeList) { /*Pour tous les fichiers ? d?truire*/
             /*Possible bug, il faudrait faire l'enum ici*/
             Enumeration files = fileList.breadthFirstEnumeration(); /*Parcours en largeur*/
-            
+
             DefaultMutableTreeNode fich;
             while (files.hasMoreElements()) {
                 fich=(DefaultMutableTreeNode)files.nextElement();
                 if(path.equals(new TreePath(fich.getPath())) ) { /*On cherche le noeud correspondant*/
                     //    System.out.println(path);
                     fich.removeAllChildren(); /*et on le d?gage, fils d'abord*/
-                    
+
                     if(!fich.isRoot()) { /*Sauf si il est ? la racine*/
                         DefaultMutableTreeNode par=(DefaultMutableTreeNode)fich.getParent();
                         par.remove(fich); /*le noeud*/
@@ -1098,22 +1098,22 @@ int i;
             //    RemovePath(path,fileList);
         }
         //          jTree1.setModel(new DefaultTreeModel(fileList));
-        
+
         //! Work Around from http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4264002
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 jTree1.updateUI();
             }
         } );
-        
-        
+
+
     }
-    
+
     private void updateMat(File [] fichs,int nb,double [] val) {
         int j;  int i;
         TableModel mat;
-        
+
         //jTable1.setColumnSelectionAllowed(true);
         jTable1.setRowSelectionAllowed(true);
 
@@ -1133,7 +1133,7 @@ int i;
             tc.setCellRenderer(td);
             if(i==0){
                 //on se passe de aller chercher la font du table header...
-                // TODO : Ameliorer ça
+                // TODO : Ameliorer ca
                 tc.setMinWidth(((String)mat.getValueAt(0,0)).length()*5);
                 tc.setCellRenderer(tr);
             }else{
@@ -1142,7 +1142,7 @@ int i;
             for(j=0;j<fichs.length;j++){
                 if(i==0) {
                     mat.setValueAt(fichs[j].getName(),j,i);
-                    
+
                 }else{
                     if(j!=i-1){ //j<i-1 suffit
                         mat.setValueAt(analys.getRes(i-1,j),j,i);}
@@ -1150,9 +1150,9 @@ int i;
                 }}
         }
     }
-    
+
     private void updateDefilZone(File [] fichs) {
-        
+
         Object[] obj=new Object[fichs.length+1];
         obj[0]="Tout";
         int i=1;
@@ -1160,22 +1160,22 @@ int i;
             obj[i]=o;
             i++;
         }
-        
-        
+
+
         ComboBoxModel li=new DefaultComboBoxModel(obj);
         jComboBox1.setModel(li);
         jLabel3.setText("sur "+Integer.toString(jComboBox1.getItemCount()-1));
-        
+
         //   jComboBox1.updateUI();
         jPanel5.setVisible(true);
     }
-    
+
     private void plot3Dhlpt(String name){
         Color red = new Color(200,0,0);
         Color blue = new Color(0,0,200);
-        
+
         Plot[] plots = plot3DPanel1.getPlots();
-        
+
         for(int i=0;i<plots.length;i++){
             plots[i].setColor(blue);
             if(plots[i].getName().compareTo(name) == 0){
@@ -1183,42 +1183,42 @@ int i;
             }
         }
         plot3DPanel1.updateUI();
-        
+
         if(curview == 0 && jProgressBar1.getValue() == jProgressBar1.getMaximum()){
             set3Dview();
         }
     }
-    
+
     private void showPlotlabels(){
         Color black = new Color(0,0,0);
         Color blue = new Color(0,0,200);
-        
+
         if(analys == null)
             return;
-        
+
         File [] fichs;
         fichs = analys.getFiles();
         double[]labelpos = new double[3];
-        
+
         for(int i=0;i<vectorsd.length;i++){
             labelpos = vectorsd[i].clone();
             labelpos[2]-=0.01;
             plot3DPanel1.addLabel(fichs[i].getName(),black,labelpos);
         }
-        
+
         slabels = true;
-        //jButton12.setText("Masquer les étiquettes");
+        //jButton12.setText("Masquer les etiquettes");
         jButton12.setIcon(new ImageIcon("Images/textfield_delete.png"));
         jButton12.setToolTipText(msgs.getString("Hide_Labels"));
     }
-    
+
     private void hidePlotlabels(){
         Plotable[] labels = plot3DPanel1.getPlotables();
         for(int i=0;i<labels.length;i++){
             plot3DPanel1.removePlotable(labels[i]);
         }
         slabels = false;
-        //jButton12.setText("Afficher les étiquettes");
+        //jButton12.setText("Afficher les etiquettes");
         jButton12.setIcon(new ImageIcon("Images/textfield_add.png"));
         jButton12.setToolTipText(msgs.getString("Show_Labels"));
     }
@@ -1232,10 +1232,10 @@ int i;
         Color black = new Color(0,0,0);
         Color blue = new Color(0,0,200);
         vectorsd = new double[vectors.length][vectors[0].length];
-        
+
         File [] fichs;
         fichs = analys.getFiles();
-        
+
         for(int i=0;i<vectors.length;i++){
             for(int j=0;j<vectors[i].length;j++){
                 vectorsd[i][j] = (double) vectors[i][j];
@@ -1244,20 +1244,20 @@ int i;
         // On fait le menage
         plot3DPanel1.removeAllPlots();
         hidePlotlabels();
-        
+
         // On affiche les vecteurs et les labels
         for(int i=0;i<vectorsd.length;i++){
             plot3DPanel1.addScatterPlot(fichs[i].getName(),blue,vectorsd[i]);
         }
         showPlotlabels();
-        
+
         jButton11.setVisible(true);
         jButton9.setEnabled(false);
         jButton3.setEnabled(true);
     }
-    
+
     private void updatePlot(double[] val, int nb) {
-        
+
         /*double[][] v2 =new double[1][];
         v2[0]=val;*/
         jSlider1.setMinimum(3);
@@ -1273,10 +1273,10 @@ int i;
         jLabel9.setText(msgs.getString("Classes")+nb/2+"/"+(nb-1));
         }
         jPanel9.setVisible(true);
-        
-        
+
+
         plot2DPanel1.addHistogramPlot(msgs.getString("Values_Histogram"),val,Math.max(nb/2,3));
-        
+
     }
     /**
      *Handle the results of the anlysis which corresponds to the true analysis of the task
@@ -1300,20 +1300,20 @@ int i;
                 }
             }
                valLin=val;
-    
+
             updateMat(fichs,nb,val);
            // updateDefilZone(fichs);
             updatePlot(val,nb);
-            
+
             jPanel4.setVisible(true);
-            //TODO : Ouvrir le splitPane à la bonne taille
+            //TODO : Ouvrir le splitPane a la bonne taille
             jSplitPane2.setDividerLocation(this.getSize().width*1/2);
             jButton9.setEnabled(false);
             jButton3.setEnabled(true);
         }
     }
-    
-    
+
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         File[] files = getFileTab();
         if(files!=null && files.length>2){
@@ -1339,24 +1339,24 @@ int i;
                 jButton3.setEnabled(false);
                 jButton9.setEnabled(true);
                 analys.start();
-                
+
             }
         }       else if(files!=null && files.length<=2){
             Utils.Errors.Error.noEnoughFiles();
-            
+
         } else{
             Utils.Errors.Error.noFiles();
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
-    
-    
+
+
     /**
      *Called on closing request to ask for saving.
      *
      */
-    
+
     public void ExitAndSaveOnglet(){
         int choix = JOptionPane.showConfirmDialog(this,msgs.getString("Save_Mods"),"Baldr",1);
         if(choix==JOptionPane.NO_OPTION) {
@@ -1367,12 +1367,12 @@ int i;
                 if(Main.ihm.sauver()!=null)
                     Main.ihm.fermerTab(this);
             }
-        
-        
+
+
     }
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         retirerFichiers();
     }//GEN-LAST:event_jButton2ActionPerformed
                         private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -1385,7 +1385,7 @@ int i;
                                                             private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
  ajouterFichiers();
     }//GEN-LAST:event_jButton1ActionPerformed
-                                                                                    
+
                                                             private void itemSuivant() {
                                                                 int suivant = jComboBox1.getSelectedIndex()+1;
                                                                 if(suivant<=jComboBox1.getItemCount()-1)
@@ -1402,7 +1402,7 @@ int i;
                                                             private void itemFin() {
                                                                 jComboBox1.setSelectedIndex(jComboBox1.getItemCount()-1);
                                                             }
-                                                            
+
                                                             private StringBuffer recursXmlFile(MutableTreeNode tree) {
                                                                 StringBuffer str=new StringBuffer();
                                                                 if(tree.isLeaf()) {
@@ -1416,24 +1416,24 @@ int i;
                                                                     }
                                                                     str.append("</dir>\n");
                                                                 }
-                                                                
+
                                                                 return str;
                                                             }
-                                                            
+
                                                             /**
                                                              * Return a stringBuffer containing an XML representation of the tab which can be thereafter saved
                                                              * @return a StringBuffer containing XML and reprensenting the tab and its "child objects"
                                                              *@see Savable
                                                              */
-                                                            
-                                                            
+
+
                                                             public StringBuffer toXml() {
                                                                 StringBuffer str=new StringBuffer();
                                                               //  str.append("<onglet  name=\"").append(Main.ihm.getTitle(tabNumber)).append("\" >\n");
                                                                   str.append("<onglet>\n");
-                                                                
+
                                                                 str.append("<filelist>\n").append(recursXmlFile(fileList)).append("</filelist>\n");
-                                                                
+
                                                                 str.append("<rapport>").append(jReport.getText()).append("</rapport>\n");
                                                                 if(analys!=null) {
                                                                     str.append(analys.toXml());
@@ -1441,7 +1441,7 @@ int i;
                                                                 str.append("</onglet>\n");
                                                                 return str;
                                                             }
-                                                            
+
                                                             private DefaultMutableTreeNode recursDomTree(Node n) {
                                                                 int i;
                                                                 File f;
@@ -1464,7 +1464,7 @@ int i;
                                                                         }
                                                                         return t;
                                                                     }else if(n.getNodeName()=="file") {
-                                                                        
+
                                                                         f=new File(n.getTextContent().trim());
                                                                         if(f.exists()) {
                                                                             return new DefaultMutableTreeNode(f);
@@ -1475,13 +1475,13 @@ int i;
                                                                 }
                                                                 return null;
                                                             }
-                                                            
+
                                                             /**
                                                              *Function that reinstate the tab from a DOM object (coming from save)
                                                              *@param node A dom element wich coresponds to the tab
                                                              *@see Savable
                                                              */
-                                                            
+
                                                             public void fromDom(Node node) {
                                                                 int j;
                                                                 int i;
@@ -1506,11 +1506,11 @@ int i;
                                                                         analys.setFiles(files);
                                                                         }
                                                                         analys.fromDom(l.item(i));
-                                                                        
+
                                                                     }
                                                                 }
-                                                                
-                                                                
+
+
                                                             }
                                                             /**
                                                              * getter for tabNumber field
@@ -1520,13 +1520,13 @@ int i;
                                                             public int getTabNumber() {
                                                                 return tabNumber;
                                                             }
-                                                            
-      
+
+
                                                             private void openEditor(File[] fichs) {
                                                                 // TODO Dememnagement dans window.balder
-                                                                
+
                                                                 String editor=Noyau.opts.readPref("EDITOR");
-                                                                
+
                                                                 if(editor.length()<1) {
                                                                     Utils.Errors.Error.noEditorDefined();
                                                                     return;
@@ -1535,41 +1535,41 @@ int i;
                                                                     editor=editor+" $1";
                                                                 }
 
-                                                                
+
                                                                 Runtime r=Runtime.getRuntime();
                                                                 String files="";
                                                                 String ex [];
-                                                                
+
                                                                 for(File fi:fichs) {
                                                                       files += fi.getAbsolutePath() + " ";
                                                                 }
                                                                 files = files.trim();
-                                                                
-                                                                
+
+
                                                                 if ((System.getProperty("os.name").toUpperCase().indexOf("MAC") != -1) && (editor.replace("$1","").trim().endsWith(".app"))) {
                                                                     editor = "open -a " + editor;
                                                                 }
-                                                                
+
                                                                 editor = editor.replace("$1",files);
-                                                                
+
                                                                 ex = Args.getArgs(editor);
-                                                                
+
                                                                 System.out.print("Start: "); for(String s : ex){
                                                                    System.out.print("<" + s + "> ");
                                                                 }System.out.println();
-                                                                
+
                                                                 try {
                                                                         r.exec(ex,(String[])null,File.listRoots()[0]);
                                                                 } catch (IOException exp) {
                                                                     // TODO gerer l'erreur dans utils.error
                                                                     exp.printStackTrace();
                                                                 }
-                                                                
+
                                                             }
-                                                            
+
                                                             private File[] getTreeSelectedFiles() {
-                                                                
-                                                                
+
+
                                                                 TreePath[] paths=jTree1.getSelectionPaths();
                                                                 if(paths == null)
                                                                     return null;
@@ -1581,21 +1581,21 @@ int i;
                                                                             fichs.add((File)o.getUserObject());
                                                                         }
                                                                     }
-                                                                    
+
                                                                 }
-                                                                
+
                                                                 return fichs.toArray(new File[0]);
-                                                                
-                                                                
+
+
                                                             }
 
     public ResourceBundle getMsgs() {
         return msgs;
     }
-                                                            
-                                                            
-                                                          
-                                                                
+
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem SelectAll;
     private javax.swing.JMenuItem ajouter;
@@ -1654,5 +1654,5 @@ int i;
     private org.math.plot.Plot3DPanel plot3DPanel1;
     private javax.swing.JMenuItem supprimer;
     // End of variables declaration//GEN-END:variables
-    
+
 }

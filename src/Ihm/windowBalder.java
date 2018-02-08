@@ -38,25 +38,25 @@ import org.w3c.dom.NodeList;
 public class windowBalder extends javax.swing.JFrame implements Savable {
     // int i=0;
     private panelTab[] listeOnglets=new panelTab[Main.MAXONGLET];
-    
+
     private aPropos aProposBaldr;
     final java.awt.Image iconBaldr = java.awt.Toolkit.getDefaultToolkit().getImage("Images/baldr.gif");
     private ResourceBundle msgs;
-    
+
     public windowBalder() {
         int i;
-        
+
         String loc = Noyau.opts.readPref("LOCALE");
         if(loc != null && loc.length() > 1){
             Locale.setDefault(new Locale(loc));
         }
-        
-        msgs=ResourceBundle.getBundle("i18n/Balder");
-        
+
+        msgs=ResourceBundle.getBundle("i18n.Balder");
+
         UIManager.put("OptionPane.yesButtonText", msgs.getString("Yes"));
         UIManager.put("OptionPane.noButtonText", msgs.getString("No"));
         UIManager.put("OptionPane.cancelButtonText", msgs.getString("Cancel"));
-        
+
         UIManager.put("FileChooser.lookInLabelText",msgs.getString("Look_in"));
         UIManager.put("FileChooser.saveInLabelText",msgs.getString("Save_in"));
         UIManager.put("FileChooser.fileNameLabelText",msgs.getString("File_name"));
@@ -65,28 +65,28 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
         UIManager.put("FileChooser.openButtonText",msgs.getString("Open"));
         UIManager.put("FileChooser.saveButtonText",msgs.getString("Save"));
         UIManager.put("FileChooser.chooseButtonText",msgs.getString("Choose"));
-        
-        
+
+
         /** Look n feel du system*/
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) { }
-        
+
        initComponents();
-          
-       
-         /* Centrer la fenêtre */
+
+
+         /* Centrer la fenetre */
         Dimension screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle frame = getBounds();
         setBounds((screen.width - frame.width)/2,(screen.height - frame.height)/2,frame.width,frame.height);
-        
+
         //javax.swing.ImageIcon iconBaldr= new javax.swing.ImageIcon("./ihmbalder/baldr.gif");
-        
+
         setIconImage(iconBaldr);
-        
+
         for(i=0;i<Main.MAXONGLET;i++) listeOnglets[i]=null;
-        
+
         ajouteOnglet();
         setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
@@ -96,7 +96,7 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
         contentsMenuItem.setEnabled(false);
         contentsMenuItem.setVisible(false);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -270,9 +270,9 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
      *@return the file chosen or null
      */
     public File sauver() {
-        
+
         // TODO rendre le filefilter plus propre
-        
+
         JFileChooser chooser = new JFileChooser();
         chooser.setMultiSelectionEnabled(false);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -285,7 +285,7 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
             chooser.setCurrentDirectory(new File(lastdir));
         }
         int res = chooser.showSaveDialog(this);
-        
+
         String curdir = chooser.getCurrentDirectory().toString();
         File ret=null;
         switch(res) {
@@ -313,14 +313,14 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
             case JFileChooser.ERROR_OPTION:
                 break;
         }
-        
-        
+
+
         if(lastdir == null || lastdir.compareTo(curdir) != 0){
             Noyau.opts.writePref("LAST_DIR",curdir);
         }
         Main.modifie=false;
         return ret;
-    } 
+    }
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         Main.modifie=false;
         Main.ihm.sauver();
@@ -346,22 +346,22 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
         FileFilter baldrfifi=new BaldrFileFilter();
         chooser.setFileFilter(baldrfifi);
         chooser.setFileFilter(new BaldrNBaldrxFileFilter());
-        
+
                       chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                                                 String lastdir = Noyau.opts.readPref("LAST_DIR");
                                                 if(lastdir != null){
                                                     chooser.setCurrentDirectory(new File(lastdir));
                                                 }
-                                                
+
                                                 int res = chooser.showOpenDialog(this);
-                                                
+
                                                 String curdir = chooser.getCurrentDirectory().toString();
-                                                
+
                                                 switch(res) {
                                                     case JFileChooser.APPROVE_OPTION:
                                                         File f=chooser.getSelectedFile();
                                                         SaveAndRestore sav=new SaveAndRestore(this);
-                                                        
+
                                                         sav.restore(f);
                                                         break;
                                                     case JFileChooser.CANCEL_OPTION:
@@ -370,7 +370,7 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
                                                     case JFileChooser.ERROR_OPTION:
                                                         break;
                                                 }
-                                                
+
                                                 if(lastdir == null || lastdir.compareTo(curdir) != 0){
                                                     Noyau.opts.writePref("LAST_DIR",curdir);
                                                 }
@@ -386,7 +386,7 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
                                                 System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
                                         /**
-                                         *Close the Tab 
+                                         *Close the Tab
                                          *@param pt tab to close
                                          */
                                         public void fermerTab(panelTab pt) {
@@ -411,7 +411,7 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
                                          */
                                         public panelTab ajouteOnglet(){
                                             int i;
-                                            for(i=0;i<Main.MAXONGLET && listeOnglets[i]!=null;i++); //détermine le 1er onglet non utilisé
+                                            for(i=0;i<Main.MAXONGLET && listeOnglets[i]!=null;i++); //determine le 1er onglet non utilise
                                             if (i==Main.MAXONGLET){
                                                 Utils.Errors.Error.tropOnglets();
                                                 return null;
@@ -425,7 +425,7 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
                                                 return newtab;
                                             }
                                         }
-                                        
+
                                         public StringBuffer toXml() {
                                             StringBuffer str=new StringBuffer();
                                             int i;
@@ -434,17 +434,17 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
                                                 if(listeOnglets[i]!=null){
                                                     str.append(listeOnglets[i].toXml());
                                                 }
-                                                
+
                                             }
-                                            
+
                                             str.append("</save>\n");
                                             return str;
                                         }
-                                        
+
                                         public void fromDom(Node n) {
                                             int i;
                                             if(n.getNodeName()=="save") {
-                                                
+
                                                 for(i=0;i<n.getChildNodes().getLength();i++) {
                                                     if(n.getChildNodes().item(i).getNodeName()!="#text"){
                                                         panelTab tab= ajouteOnglet();
@@ -456,17 +456,17 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
                                                         }*/
                                                     }
                                                 }
-                                                
-                                                
+
+
                                             }
                                         }
      /**
      * Called on closing request to ask for saving.
      * and quit
      *
-     */                           
+     */
             public void ExitAndSave() {
-             
+
             int choix = JOptionPane.showConfirmDialog(this,msgs.getString("Save_Mods"),"Baldr",JOptionPane.YES_NO_CANCEL_OPTION);
             if(choix==JOptionPane.NO_OPTION)
             {
@@ -478,7 +478,7 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
                     System.exit(0);
             }
             }
-            
+
             String getTitle(int i)
             {
             return jTabbedPane1.getTitleAt(i);
@@ -487,11 +487,11 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
     public ResourceBundle getMsgs() {
         return msgs;
     }
-            
-            
-                
-                                        
-    /** Preferences Preference of the appliaction*/                                    
+
+
+
+
+    /** Preferences Preference of the appliaction*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenuItem Preferences;
     private javax.swing.JMenuItem aboutMenuItem;
@@ -508,5 +508,5 @@ public class windowBalder extends javax.swing.JFrame implements Savable {
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
-    
+
 }

@@ -1,7 +1,7 @@
 /*
  * Args.java
  *
- * Created on 29 août 2007, 22:52
+ * Created on 29 aout 2007, 22:52
  *
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
@@ -17,19 +17,19 @@ import java.util.ArrayList;
  * @author nezetic
  */
 public class Args {
-    
+
     /** Creates a new instance of Args */
     public Args() {
     }
-    
+
     static public String[] getArgs(String str){
-        
+
         int i,bp,pa,ma,len=str.length();
         String expath;
         ArrayList<String> args = new ArrayList<String>();
-        
+
         for(i=0,bp=-1,pa=0,ma=0;i<len;i++){
-            
+
             if(str.charAt(i) == '\\' || str.charAt(i) == '/'){
                 pa=1;
             }else if(str.charAt(i) == ' ' || ma == 1){
@@ -47,20 +47,20 @@ public class Args {
                         bp=i;
                     }
                 }
-                
+
             }
             if(i == len - 2){
                 ma = 1;
             }
         }
-        
+
         String ex [] = new String [args.size()];
         args.toArray(ex);
         args.clear();
-        
-        
+
+
         return ex;
-        
+
     }
-    
+
 }
